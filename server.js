@@ -73,7 +73,24 @@ app.post("/api/auth", (req, res) => {
   }
 });
 
+// ✅ Ping route for self-wake
+app.get("/ping", (req, res) => {
+  res.send("pong");
+});
+
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
+  // ✅ node-cron self-ping every 4 minutes
+  cron.schedule("*/4 * * * *", async () => {
+    try {
+      const res = await fetch("https://tech-aid-backend.onrender.com/ping"); // Replace with your actual backend URL
+      const text = await res.text();
+      console.log(
+        `[Self-Ping] ✅ ${text} at ${new Date().toLocaleTimeString()}`
+      );
+    } catch (err) {
+      console.error(`[Self-Ping] ❌ Failed: ${err.message}`);
+    }
+  });
 });
