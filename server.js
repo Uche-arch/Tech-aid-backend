@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cron = require("node-cron");         // ✅ Don't forget this
+const fetch = require("node-fetch");       // ✅ If you’re pinging a URL
 const cors = require("cors");
 const Problem = require("./models/problem");
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
